@@ -22,13 +22,11 @@ public class SauceDemoTests {
 
     @BeforeClass
     public void setUp() {
-        // Set up ChromeDriver using WebDriverManager
-        // Initialize the WebDriver
-        WebDriverManager.chromedriver().setup();  // Make sure WebDriverManager is up to date
+
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get("https://www.saucedemo.com"); // URL to navigate to
 
-        // Initialize the page object
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
         cartPage = new CartPage(driver);
@@ -39,24 +37,22 @@ public class SauceDemoTests {
     @Test
     public void testLoginSuccessful() {
         loginPage.openLoginPage();
-        loginPage.doLogin();
+        loginPage.doLogin(1);
         loginPage.validateLoginSuccessful();
     }
 
     @Test
     public void testSortResultsByPriceHighToLow() throws InterruptedException {
         loginPage.openLoginPage();
-        loginPage.doLogin();
-        //Thread.sleep(1000);
+        loginPage.doLogin(1);
         homePage.sortByHighToLow();
-        //Thread.sleep(3000);
+        Thread.sleep(3000);
     }
 
     @Test
     public void testAddToCartByPriceAndPurchaseThenLog() throws InterruptedException {
         loginPage.openLoginPage();
-        loginPage.doLogin();
-        //Thread.sleep(1000);
+        loginPage.doLogin(1);
         homePage.addToCartByPrice(15.99);
         Thread.sleep(2000);
         homePage.clickHomeCartIcon();
@@ -66,6 +62,14 @@ public class SauceDemoTests {
         overviewPage.logCheckoutSummary();
         Thread.sleep(2000);
     }
+
+    @Test
+    public void testLoginFail() {
+        loginPage.openLoginPage();
+        loginPage.doLogin(2);
+        loginPage.validateLoginFail();
+    }
+
 
     @AfterClass
     public void tearDown() {

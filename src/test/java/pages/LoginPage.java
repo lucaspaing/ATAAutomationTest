@@ -32,6 +32,13 @@ public class LoginPage {
     @FindBy(id = "logout_sidebar_link")
     private WebElement logout;
 
+    @FindBy(xpath = "//*[@id='login_button_container']/div/form/div[3]/h3")
+    private WebElement errorMsg;
+
+    @FindBy(className = "error-button")
+    private WebElement errorBtn;
+
+
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -41,11 +48,11 @@ public class LoginPage {
         driver.get("https://saucedemo.com");
     }
 
-    public void doLogin() {
+    public void doLogin(int usrindex) {
         String users = usersList.getText();
 
         List<String> usr = List.of(users.split("\n"));
-        String ValidUser = usr.get(1);
+        String ValidUser = usr.get(usrindex);
 
         String Password = passwords.getText();
         List<String> pwd = List.of(Password.split("\n"));
@@ -62,5 +69,12 @@ public class LoginPage {
         Assert.assertEquals(titleValue, "Products", "Title should be 'Products'");
         Assert.assertTrue(title.isDisplayed(), "Title should be displayed");
         Assert.assertTrue(logout.isEnabled(), "Logout link should be enabled");
+    }
+
+    public void validateLoginFail() {
+        String errorMessage = errorMsg.getText();
+
+        Assert.assertEquals(errorMessage, "Epic sadface: Sorry, this user has been locked out.", "Error message text is not as expected.");
+        Assert.assertTrue(errorMsg.isDisplayed());
     }
 }

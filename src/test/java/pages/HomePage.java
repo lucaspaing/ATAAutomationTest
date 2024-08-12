@@ -59,14 +59,14 @@ public class HomePage {
                 double nextPrice = Double.parseDouble(nextPriceText);
 
                 if (currentPrice < nextPrice) {
-                    return false;  // Prices are not in descending order
+                    return false;
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 return false;
             }
         }
-        return true;  // Prices are in descending order
+        return true;
     }
 
     public void addToCartByPrice(Double expectedPrice) {
