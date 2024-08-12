@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import org.openqa.selenium.By;
+
 
 import java.util.List;
 
@@ -23,6 +25,13 @@ public class HomePage {
 
     @FindBy(className = "inventory_item_price")
     private List<WebElement> itemPrices;
+
+    @FindBy(id = "shopping_cart_container")
+    private WebElement cartIcon;
+
+    @FindBy(id = "checkout")
+    private WebElement checkoutButton;
+
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -60,6 +69,28 @@ public class HomePage {
         return true;  // Prices are in descending order
     }
 
+    public void addToCartByPrice(Double expectedPrice) {
+        List<WebElement> prices = itemPrices;
 
+        for (int i = 0; i < prices.size(); i++) {
+            String priceText = prices.get(i).getText().replace("$", "").trim();
+
+            try {
+                double price = Double.parseDouble(priceText);
+                if (price == expectedPrice) {
+                    WebElement button = driver.findElement(By.xpath(
+                            String.format("//div[@class='inventory_item'][%d]//button[text()='Add to cart']", i + 1)
+                    ));
+                    button.click();
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void clickHomeCartIcon() {
+        cartIcon.click();
+    }
 
 }
