@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
@@ -65,16 +65,18 @@ public class LoginPage {
 
     public void validateLoginSuccessful() {
         String titleValue = title.getText();
-
-        Assert.assertEquals(titleValue, "Products", "Title should be 'Products'");
-        Assert.assertTrue(title.isDisplayed(), "Title should be displayed");
-        Assert.assertTrue(logout.isEnabled(), "Logout link should be enabled");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(titleValue, "Products", "Title should be 'Products'");
+        softAssert.assertTrue(title.isDisplayed(), "Title should be displayed");
+        softAssert.assertTrue(logout.isEnabled(), "Logout link should be enabled");
+        softAssert.assertAll();
     }
 
     public void validateLoginFail() {
         String errorMessage = errorMsg.getText();
-
-        Assert.assertEquals(errorMessage, "Epic sadface: Sorry, this user has been locked out.", "Error message text is not as expected.");
-        Assert.assertTrue(errorMsg.isDisplayed());
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(errorMessage, "Epic sadface: Sorry, this user has been locked out.", "Error message text is not as expected.");
+        softAssert.assertTrue(errorMsg.isDisplayed());
+        softAssert.assertAll();
     }
 }

@@ -4,8 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import org.openqa.selenium.By;
+import org.testng.asserts.SoftAssert;
+
 import java.util.List;
 
 public class HomePage {
@@ -38,10 +39,11 @@ public class HomePage {
     public void sortByHighToLow() {
         sortDropdown.click();
         sortByPriHiLo.click();
-
+        SoftAssert softAssert = new SoftAssert();
         String activeSortBy = activeSort.getText();
-        Assert.assertEquals(activeSortBy, "Price (high to low)", "Sort option did not change to 'Price (high to low)'");
-        Assert.assertTrue(checkThePricesInDescendingOrder(),"The prices are not sorted in High to Low Value");
+        softAssert.assertEquals(activeSortBy, "Price (high to low)", "Sort option did not change to 'Price (high to low)'");
+        softAssert.assertTrue(checkThePricesInDescendingOrder(),"The prices are not sorted in High to Low Value");
+        softAssert.assertAll();
     }
 
     private boolean checkThePricesInDescendingOrder() {
