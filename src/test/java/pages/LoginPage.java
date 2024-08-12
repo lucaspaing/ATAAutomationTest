@@ -34,7 +34,7 @@ public class LoginPage {
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);  // Initialize the WebElements
+        PageFactory.initElements(driver, this);
     }
 
     public void openLoginPage() {
@@ -45,11 +45,11 @@ public class LoginPage {
         String users = usersList.getText();
 
         List<String> usr = List.of(users.split("\n"));
-        String ValidUser = usr.get(1);  // Assuming the second line is the valid username
+        String ValidUser = usr.get(1);
 
         String Password = passwords.getText();
         List<String> pwd = List.of(Password.split("\n"));
-        String ValidPassword = pwd.get(1);  // Assuming the second line is the valid password
+        String ValidPassword = pwd.get(1);
 
         usernameTextbox.sendKeys(ValidUser);
         passwordTextBox.sendKeys(ValidPassword);
@@ -57,10 +57,9 @@ public class LoginPage {
     }
 
     public void validateLoginSuccessful() {
-        // Validate that logged in successfully.
         String titleValue = title.getText();
-        Assert.assertEquals(titleValue, "Products", "Title should be 'Products'");
 
+        Assert.assertEquals(titleValue, "Products", "Title should be 'Products'");
         Assert.assertTrue(title.isDisplayed(), "Title should be displayed");
         Assert.assertTrue(logout.isEnabled(), "Logout link should be enabled");
     }

@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pages.HomePage;
 import pages.LoginPage;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 public class SauceDemoTests {
     private WebDriver driver;
     private LoginPage loginPage;
+    private HomePage homePage;
 
     @BeforeClass
     public void setUp() {
@@ -25,6 +27,7 @@ public class SauceDemoTests {
 
         // Initialize the page object
         loginPage = new LoginPage(driver);
+        homePage = new HomePage(driver);
     }
 
     @Test
@@ -32,6 +35,15 @@ public class SauceDemoTests {
         loginPage.openLoginPage();
         loginPage.doLogin();
         loginPage.validateLoginSuccessful();
+    }
+
+    @Test
+    public void testSortResultsByPriceHighToLow() throws InterruptedException {
+        loginPage.openLoginPage();
+        loginPage.doLogin();
+        //Thread.sleep(1000);
+        homePage.sortByHighToLow();
+        //Thread.sleep(3000);
     }
 
     @AfterClass
