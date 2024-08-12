@@ -8,10 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.CartPage;
-import pages.HomePage;
-import pages.LoginPage;
-import pages.YourInformationPage;
+import pages.*;
 
 import java.util.List;
 
@@ -21,6 +18,7 @@ public class SauceDemoTests {
     private HomePage homePage;
     private CartPage cartPage;
     private YourInformationPage yourInformationPage;
+    private OverviewPage overviewPage;
 
     @BeforeClass
     public void setUp() {
@@ -35,6 +33,7 @@ public class SauceDemoTests {
         homePage = new HomePage(driver);
         cartPage = new CartPage(driver);
         yourInformationPage = new YourInformationPage(driver);
+        overviewPage = new OverviewPage(driver);
     }
 
     @Test
@@ -54,7 +53,7 @@ public class SauceDemoTests {
     }
 
     @Test
-    public void testAddToCartByPriceAndPurchase() throws InterruptedException {
+    public void testAddToCartByPriceAndPurchaseThenLog() throws InterruptedException {
         loginPage.openLoginPage();
         loginPage.doLogin();
         //Thread.sleep(1000);
@@ -64,6 +63,7 @@ public class SauceDemoTests {
         cartPage.clickCartCheckoutButton();
         Thread.sleep(2000);
         yourInformationPage.fillUserInformationAndContinue();
+        overviewPage.logCheckoutSummary();
         Thread.sleep(2000);
     }
 
