@@ -1,16 +1,11 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.checkerframework.checker.units.qual.C;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.*;
 
-import java.util.List;
 
 public class SauceDemoTests {
     private WebDriver driver;
@@ -25,8 +20,8 @@ public class SauceDemoTests {
 
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.get("https://www.saucedemo.com"); // URL to navigate to
-
+        driver.manage().window().maximize();
+        driver.get("https://www.saucedemo.com");
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
         cartPage = new CartPage(driver);

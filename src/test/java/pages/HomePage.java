@@ -6,14 +6,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.openqa.selenium.By;
-
-
 import java.util.List;
 
 public class HomePage {
     private WebDriver driver;
 
-    // Locators for sorting options
     @FindBy(xpath = "//select[@class='product_sort_container']")
     private WebElement sortDropdown;
 
