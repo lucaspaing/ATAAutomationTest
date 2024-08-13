@@ -29,14 +29,14 @@ public class SauceDemoTests {
         overviewPage = new OverviewPage(driver);
     }
 
-    @Test
+    @Test (priority = 1)
     public void testLoginSuccessful() {
         loginPage.openLoginPage();
         loginPage.doLogin(1);
         loginPage.validateLoginSuccessful();
     }
 
-    @Test
+    @Test (priority = 2)
     public void testSortResultsByPriceHighToLow() throws InterruptedException {
         loginPage.openLoginPage();
         loginPage.doLogin(1);
@@ -44,7 +44,7 @@ public class SauceDemoTests {
         Thread.sleep(3000);
     }
 
-    @Test
+    @Test (priority = 3)
     public void testAddToCartByPriceAndPurchaseThenLog() throws InterruptedException {
         loginPage.openLoginPage();
         loginPage.doLogin(1);
@@ -58,7 +58,7 @@ public class SauceDemoTests {
         Thread.sleep(2000);
     }
 
-    @Test
+    @Test (priority = 4)
     public void testLoginFail() {
         loginPage.openLoginPage();
         loginPage.doLogin(2);

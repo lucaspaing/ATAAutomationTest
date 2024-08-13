@@ -4,9 +4,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class OverviewPage {
+    private static final Logger log = LoggerFactory.getLogger(OverviewPage.class);
     private WebDriver driver;
 
     @FindBy(xpath = "//span[@data-test='title']")
@@ -63,21 +66,14 @@ public class OverviewPage {
     }
 
     public void logCheckoutSummary() {
-        String newLine = System.getProperty("line.separator");
-        String checkoutTitleText = checkoutTitle.getText();
         String qtyText = cartQuantityLabel.getText();
-        String descText = cartDescLabel.getText();
-        String paymentInfoText = paymentInfoLabel.getText();
         String paymentInfoValueText = paymentInfoValue.getText();
-        String shippingInfoText = shippingInfoLabel.getText();
         String shippingInfoValueText = shippingInfoValue.getText();
-        String totalInfoText = totalInfoLabel.getText();
         String subtotalText = subtotalLabel.getText();
         String taxText = taxLabel.getText();
         String totalText = totalLabel.getText();
 
-        System.out.println(newLine + checkoutTitleText + newLine);
-        System.out.println(qtyText + " " + descText);
+        log.info("=== Checkout Summary Logging Started ===");
 
         int cartItemSize = cartItems.size();
         for (int i = 0; i < cartItemSize; i++) {
@@ -85,11 +81,12 @@ public class OverviewPage {
             String cartItemName = inventoryItemNames.get(i).getText();
             String cartItemDesc = inventoryItemDescriptions.get(i).getText();
             String cartItemPrice = inventoryItemPrices.get(i).getText();
-            System.out.println("  " + cartItemQty + " " + cartItemName + newLine + "    " + cartItemDesc + newLine + "    " + cartItemPrice);
+            log.info("Item {}: {} for Item Name: {} , Item Description: {}, Item price {}", qtyText, cartItemQty, cartItemName, cartItemDesc, cartItemPrice);
         }
 
-        System.out.println(newLine + paymentInfoText + newLine + paymentInfoValueText + newLine);
-        System.out.println(shippingInfoText + newLine + shippingInfoValueText + newLine);
-        System.out.println(totalInfoText + newLine + subtotalText + newLine + taxText + newLine + totalText);
+        log.info("Payment information: {}", paymentInfoValueText);
+        log.info("Shipping information: {}", shippingInfoValueText);
+        log.info("Price Total > {}, {}, {}", subtotalText, taxText, totalText);
+        log.info("=== Checkout Summary Logging Ended ===");
     }
 }
